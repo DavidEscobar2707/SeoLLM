@@ -95,28 +95,31 @@ export function NetworkGraph({ originalQuery, expansions, onNodeClick }: Network
       .attr('stroke-width', 1.5)
       .attr('stroke-opacity', 0.6);
 
+    // Create drag behavior
+    const dragBehavior = d3.drag<SVGGElement, GraphNode>()
+      .on('start', (event, d) => {
+        if (!event.active) simulation.alphaTarget(0.3).restart();
+        d.fx = d.x;
+        d.fy = d.y;
+      })
+      .on('drag', (event, d) => {
+        d.fx = event.x;
+        d.fy = event.y;
+      })
+      .on('end', (event, d) => {
+        if (!event.active) simulation.alphaTarget(0);
+        d.fx = null;
+        d.fy = null;
+      });
+
     // Draw nodes
     const node = container.append('g')
       .attr('class', 'nodes')
-      .selectAll('g')
+      .selectAll<SVGGElement, GraphNode>('g')
       .data(nodes)
       .join('g')
       .attr('cursor', 'pointer')
-      .call(d3.drag<SVGGElement, GraphNode>()
-        .on('start', (event, d) => {
-          if (!event.active) simulation.alphaTarget(0.3).restart();
-          d.fx = d.x;
-          d.fy = d.y;
-        })
-        .on('drag', (event, d) => {
-          d.fx = event.x;
-          d.fy = event.y;
-        })
-        .on('end', (event, d) => {
-          if (!event.active) simulation.alphaTarget(0);
-          d.fx = null;
-          d.fy = null;
-        }));
+      .call(dragBehavior);
 
     // Add circles to nodes
     node.append('circle')
@@ -206,7 +209,6 @@ export function NetworkGraph({ originalQuery, expansions, onNodeClick }: Network
 
   const handleReset = () => {
     if (svgRef.current) {
-      const { width, height } = dimensions;
       d3.select(svgRef.current).transition().call(
         d3.zoom<SVGSVGElement, unknown>().transform as never,
         d3.zoomIdentity.translate(0, 0).scale(1)

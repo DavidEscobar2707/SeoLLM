@@ -246,7 +246,7 @@ export function ResultsTable({ expansions, validations = [], originalQuery = '',
                   onClick={() => handleTypeToggle(type)}
                   className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
                     selectedTypes.has(type)
-                      ? 'ring-2 ring-offset-1'
+                      ? ''
                       : 'opacity-50'
                   }`}
                   style={{
@@ -254,7 +254,9 @@ export function ResultsTable({ expansions, validations = [], originalQuery = '',
                       ? `${TYPE_COLORS[type]}20`
                       : '#f1f5f9',
                     color: TYPE_COLORS[type],
-                    ringColor: TYPE_COLORS[type],
+                    boxShadow: selectedTypes.has(type)
+                      ? `0 0 0 2px white, 0 0 0 4px ${TYPE_COLORS[type]}`
+                      : 'none',
                   }}
                 >
                   <div
