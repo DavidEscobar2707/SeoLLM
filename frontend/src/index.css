@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-reformulation: #3b82f6;
+  --color-related: #10b981;
+  --color-implicit: #f59e0b;
+  --color-comparative: #ef4444;
+  --color-entity: #8b5cf6;
+  --color-personalized: #ec4899;
+}
+
+body {
+  @apply font-sans antialiased;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #f1f5f9 100%);
+  min-height: 100vh;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-slate-100 rounded-full;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 rounded-full hover:bg-slate-400;
+}
+
+/* Graph tooltip styles */
+.graph-tooltip {
+  @apply absolute bg-white rounded-lg shadow-xl border border-slate-200 p-4 z-50;
+  @apply text-sm max-w-xs pointer-events-none;
+  @apply animate-fade-in;
+}
+
+/* Type badge styles */
+.type-badge {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+}
+
+.type-badge-reformulation {
+  @apply bg-blue-100 text-blue-800;
+}
+
+.type-badge-related {
+  @apply bg-emerald-100 text-emerald-800;
+}
+
+.type-badge-implicit {
+  @apply bg-amber-100 text-amber-800;
+}
+
+.type-badge-comparative {
+  @apply bg-red-100 text-red-800;
+}
+
+.type-badge-entity_expansion {
+  @apply bg-violet-100 text-violet-800;
+}
+
+.type-badge-personalized {
+  @apply bg-pink-100 text-pink-800;
+}
+
+/* Loading animation */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.loading-shimmer {
+  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
